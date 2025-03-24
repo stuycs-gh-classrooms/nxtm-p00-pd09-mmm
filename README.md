@@ -41,8 +41,9 @@ g = acceleration due to gravity
   - it uses bsize, which will be used to calculate "volume" (or rather area) of the Orb
   - note that mass will NOT be used, as we are looking at the density of the *fluid*, not the Orb
 
-- Does this force require any new constants, if so what are they and what values will you try initially?
-  - p, density. Trying a number between 0 and 1.
+- Does this force require any new constants, if so what are they and what values will you try initially? 
+  - V<sub>tot<sub>, representing the total volume of fluid. Water levels rise depending on volume of fluid, and perhaps fluid can be added and removed at the user's descretion.
+  - p, density. Trying a number close to (MAX_MASS + MIN_MASS) / (PI * (MAX_SIZE + MIN_SIZE)^2 / 4), the average density of an orb (average mass over average area).
   - g, acceleration due to gravity, will be calculated based on the mass of some large fixedOrb.
 
 - Does this force require any new information to be added to the `Orb` class? If so, what is it and what data type will you use?
@@ -60,7 +61,9 @@ g = acceleration due to gravity
 
 ### Simulation 1: Gravity
 Describe how you will attempt to simulate orbital motion.
+
 Orbs have a fixed starting velocity, proportional to their distance from the FixedOrb and perpendicular to the line connecting them.
+
 FixedOrb has a very large mass, Orbs have small, mayhaps negligible mass (so as to not interfere with each others' orbit).
 
 --- 
@@ -68,7 +71,7 @@ FixedOrb has a very large mass, Orbs have small, mayhaps negligible mass (so as 
 ### Simulation 2: Spring
 Describe what your spring simulation will look like. Explain how it will be setup, and how it should behave while running.
 
-YOUR ANSWER HERE
+Similar to previous simulations, Orbs will be connected to each other by a spring.
 
 --- 
 
