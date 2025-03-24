@@ -42,7 +42,7 @@ g = acceleration due to gravity
   - note that mass will NOT be used, as we are looking at the density of the *fluid*, not the Orb
 
 - Does this force require any new constants, if so what are they and what values will you try initially? 
-  - V<sub>tot<sub>, representing the total volume of fluid. Water levels rise depending on volume of fluid, and perhaps fluid can be added and removed at the user's descretion.
+  - V<sub>tot</sub>, representing the total volume of fluid. Water levels rise depending on volume of fluid, and perhaps fluid can be added and removed at the user's descretion.
   - p, density. Trying a number close to (MAX_MASS + MIN_MASS) / (PI * (MAX_SIZE + MIN_SIZE)^2 / 4), the average density of an orb (average mass over average area).
   - g, acceleration due to gravity, will be calculated based on the mass of some large fixedOrb.
 
