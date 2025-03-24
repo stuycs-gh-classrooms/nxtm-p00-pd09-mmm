@@ -26,33 +26,42 @@ All projects will require the following:
 ## Phase 0: Force Selection, Analysis & Plan
 ---------- 
 
-#### Custom Force: NAME OF YOUR FORCE
+#### Custom Force: BUOYANT FORCE
 
 ### Forumla
 What is the formula for your force? Including descriptions/definitions for the symbols. (You may include a picture of the formula if it is not easily typed.)
 
-YOUR ANSWER HERE
+F<sub>b</sub> = pVg
+p = density of the fluid (constant, unless changed by user input)
+V = volume displaced by the orb
+g = acceleration due to gravity
 
 ### Custom Force
 - What information that is already present in the `Orb` or `OrbNode` classes does this force use?
-  - YOUR ANSWER HERE
+  - it uses bsize, which will be used to calculate "volume" (or rather area) of the Orb
+  - note that mass will NOT be used, as we are looking at the density of the *fluid*, not the Orb
 
 - Does this force require any new constants, if so what are they and what values will you try initially?
-  - YOUR ANSWER HERE
+  - p, density. Trying a number between 0 and 1.
+  - g, acceleration due to gravity, will be calculated based on the mass of some large fixedOrb.
 
 - Does this force require any new information to be added to the `Orb` class? If so, what is it and what data type will you use?
-  - YOUR ANSWER HERE
+  - nah.
 
 - Does this force interact with other `Orbs`, or is it applied based on the environment?
-  - YOUR ANSWER HERE
+  - applied based on the environment: deeper Orbs will be slightly more affected by this force due to g increasing.
 
 - In order to calculate this force, do you need to perform extra intermediary calculations? If so, what?
-  - YOUR ANSWER HERE
+  - Yeah.
+   - calculate g (F<sub>g</sub> / m)
+   - calculate V (PI * bsize^2)
 
 --- 
 
 ### Simulation 1: Gravity
 Describe how you will attempt to simulate orbital motion.
+Orbs have a fixed starting velocity, proportional to their distance from the FixedOrb and perpendicular to the line connecting them.
+FixedOrb has a very large mass, Orbs have small, mayhaps negligible mass (so as to not interfere with each others' orbit).
 
 --- 
 
@@ -79,6 +88,3 @@ YOUR ANSWER HERE
 
 ### Simulation 5: Combination
 Describe what your combination simulation will look like. Explain how it will be setup, and how it should behave while running.
-
-YOUR ANSWER HERE
-
