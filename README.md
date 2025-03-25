@@ -71,7 +71,7 @@ FixedOrb has a very large mass, Orbs have small, mayhaps negligible mass (so as 
 ### Simulation 2: Spring
 Describe what your spring simulation will look like. Explain how it will be setup, and how it should behave while running.
 
-Similar to previous simulations, Orbs will be connected to each other by a spring.
+Similar to previous simulations, Orbs will be connected to each other by a spring and setup across a horixontal line at y = height/2.
 
 --- 
 
