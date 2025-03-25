@@ -95,3 +95,4 @@ Additionally, the user can change the orientation of the container with the left
 
 ### Simulation 5: Combination
 Describe what your combination simulation will look like. Explain how it will be setup, and how it should behave while running.
+A line of Orbs along height/2 appears, with water level ~3/4 up the screen. The user can 
