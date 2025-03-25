@@ -95,4 +95,4 @@ Additionally, the user can change the orientation of the container with the left
 
 ### Simulation 5: Combination
 Describe what your combination simulation will look like. Explain how it will be setup, and how it should behave while running.
-A line of Orbs along height/2 appears, with water level ~3/4 up the screen. The user can 
+A line of Orbs along height/2 appears, with water level ~3/4 up the screen. The user can choose to activate Gravity, Spring, and Buoyancy force. With these forces, Orbs will float inside the water and a spring will connect them, factoring in the Buoyancy and Gravity forces. Their velocity will be influenced by this spring; they will initially be moving in random x and y directions.
