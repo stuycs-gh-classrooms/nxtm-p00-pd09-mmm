@@ -32,8 +32,11 @@ All projects will require the following:
 What is the formula for your force? Including descriptions/definitions for the symbols. (You may include a picture of the formula if it is not easily typed.)
 
 F<sub>b</sub> = pVg
+
 p = density of the fluid (constant, unless changed by user input)
+
 V = volume displaced by the orb
+
 g = acceleration due to gravity
 
 ### Custom Force
@@ -71,21 +74,22 @@ FixedOrb has a very large mass, Orbs have small, mayhaps negligible mass (so as 
 ### Simulation 2: Spring
 Describe what your spring simulation will look like. Explain how it will be setup, and how it should behave while running.
 
-Similar to previous simulations, Orbs will be connected to each other by a spring and setup across a horixontal line at y = height/2.
+Similar to previous simulations, OrbNodes will be connected to each other by a spring and setup across a horixontal line at y = height/2. They will have an initial downward velocity. Due to the varying size of each Orb, they will naturally displace relative to each other after the first bounce, strecthing springs and allowing their forces to be visible.
 
 --- 
 
 ### Simulation 3: Drag
 Describe what your drag simulation will look like. Explain how it will be setup, and how it should behave while running.
 
-YOUR ANSWER HERE
+Two Orbs of fixed size with an initial rightward velocity will be placed on the left half of the screen, and two areas of different drag coefficient will be separated by a horizontal line in the center, each area denoted with a different color. 
 
 --- 
 
 ### Simulation 4: Custom force
 Describe what your Custom force simulation will look like. Explain how it will be setup, and how it should behave while running.
 
-YOUR ANSWER HERE
+~5 Orbs will appear randomly inside the fluid, with no initial velocity. However, due to buoyancy, they will naturally float (or sink, as buoyancy also requires gravity to work).
+Additionally, the user can change the orientation of the container with the left and right arrow keys, and the volume of liquid in the container with the up and down arrow keys.
 
 --- 
 
