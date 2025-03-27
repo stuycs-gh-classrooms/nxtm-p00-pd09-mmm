@@ -19,10 +19,11 @@ int SPRINGSIM = 2;
 int DRAGSIM = 3;
 int BUOYSIM = 4;
 int COMBOSIM = 5;
-int SIM = 0; 
 
 boolean[] toggles = new boolean[4];
+boolean[] simulation = new boolean[5];
 String[] modes = {"Moving", "Bounce", "Gravity", "Drag"};
+String[] sims = {"Gravity", "Spring", "Drag", "Buoyancy", "Combo"};
 
 FixedOrb earth;
 
@@ -108,6 +109,17 @@ void displayMode() {
 
     float w = textWidth(modes[m]);
     rect(x, 0, w+5, 20);
+    fill(0);
+    text(modes[m], x+2, 2);
+    x+= w+5;
+  }
+  for (int m=0; m<sims.length; m++) {
+    //set box color
+    if (simulation[m]) { fill(0, 255, 0); }
+    else { fill(255, 0, 0); }
+
+    float w = textWidth(modes[m]);
+    rect(x, 20, w+5, 20);
     fill(0);
     text(modes[m], x+2, 2);
     x+= w+5;
