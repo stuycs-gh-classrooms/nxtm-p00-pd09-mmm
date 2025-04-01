@@ -14,11 +14,11 @@ int BOUNCE = 1;
 int GRAVITY = 2;
 int DRAGF = 3;
 
-int GRAVITYSIM = 1;
-int SPRINGSIM = 2;
-int DRAGSIM = 3;
-int BUOYSIM = 4;
-int COMBOSIM = 5;
+int GRAVITYSIM = 0;
+int SPRINGSIM = 1;
+int DRAGSIM = 2;
+int BUOYSIM = 3;
+int COMBOSIM = 4;
 
 boolean[] toggles = new boolean[4];
 boolean[] simulation = new boolean[5];
@@ -35,7 +35,8 @@ void setup() {
   earth = new FixedOrb(width/2, height * 200, 1, 20000);
 
   slinky = new OrbList();
-  slinky.populate(NUM_ORBS, true);
+  simulation[GRAVITYSIM] = true;
+  slinky.populate(NUM_ORBS, GRAVITYSIM);
 }//setup
 
 void draw() {
@@ -74,27 +75,29 @@ void keyPressed() {
     slinky.removeFront();
   }
   if (key == '1') {
-    SIM = GRAVITYSIM;
-    slinky.populate(NUM_ORBS, true);
+    setSim(GRAVITYSIM);
   }
   if (key == '2') {
-    SIM = SPRINGSIM;
-    slinky.populate(NUM_ORBS, false);
+    setSim(SPRINGSIM);
   }
   if (key == '3') {
-    SIM = DRAGSIM;
-    slinky.populate(NUM_ORBS, false);
+    setSim(DRAGSIM);
   }
   if (key == '4') {
-    SIM = BUOYSIM;
-    slinky.populate(NUM_ORBS, false);
+    setSim(BUOYSIM);
   }
   if (key == '5') {
-    SIM = COMBOSIM;
-    slinky.populate(NUM_ORBS, false);
+    setSim(COMBOSIM);
   }
 }//keyPressed
 
+void setSim(int simType) {
+  for (int i = 0; i < simulation.length; i++) {
+    simulation[i] = false;
+  }
+  simulation[simType] = true;
+  slinky.populate(NUM_ORBS, simType);
+}
 
 void displayMode() {
   textAlign(LEFT, TOP);
@@ -113,15 +116,16 @@ void displayMode() {
     text(modes[m], x+2, 2);
     x+= w+5;
   }
+  x = 0;
   for (int m=0; m<sims.length; m++) {
     //set box color
     if (simulation[m]) { fill(0, 255, 0); }
     else { fill(255, 0, 0); }
 
-    float w = textWidth(modes[m]);
+    float w = textWidth(sims[m]);
     rect(x, 20, w+5, 20);
     fill(0);
-    text(modes[m], x+2, 2);
+    text(sims[m], x+2, 22);
     x+= w+5;
   }
 }//display

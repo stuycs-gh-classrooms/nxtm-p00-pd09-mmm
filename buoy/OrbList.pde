@@ -20,6 +20,11 @@ class OrbList {
     o.next = front;
     front = o;
   }//addFront
+  
+  void addFront(Orb o) {
+    o.next = front;
+    front = o;
+  }//addFront
 
 
   /*===========================
@@ -32,17 +37,45 @@ class OrbList {
    have the same y coordinate and be spaced
    SPRING_LEGNTH apart horizontally.
    =========================*/
-  void populate(int n, boolean ordered) {
+  void populate(int n, int simType) {
     front = null;
-    OrbNode orb;
+    OrbNode orbn;
+    Orb orb;
     for (int i = 0; i < n; i++) {
-      if (ordered) {
-        orb = new OrbNode(width/2 + ((float)i - (float)n/2 + 0.5) * SPRING_LENGTH, height/2, 
+      //switch(simType) {
+      //  case 1:
+      //  orb = new OrbNode(width/2/n*i, height/2, 
+      //                    random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
+      //  case 2:
+        
+      //  case 3:
+        
+      //  case 4:
+        
+      //  case 5:
+        
+      //  }
+      if (simType == GRAVITYSIM) {
+        orb = new Orb(width/2/n*i, height/2, 
                           random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
+                          addFront(orb);
+      } else if (simType == SPRINGSIM) {
+        orbn = new OrbNode(width/2 + ((float)i - (float)n/2 + 0.5) * SPRING_LENGTH, height/2, 
+                          random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
+                          addFront(orbn);
+      } else if (simType == DRAGSIM) {
+        orb = new Orb(width/2 + ((float)i - (float)n/2 + 0.5) * SPRING_LENGTH, height/2, 
+                          random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
+                          addFront(orb);
+      } else if (simType == BUOYSIM) {
+        orb = new Orb(width/2 + ((float)i - (float)n/2 + 0.5) * SPRING_LENGTH, height/2, 
+                          random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
+                          addFront(orb);
       } else {
-        orb = new OrbNode();
-      } 
-      addFront(orb);
+        orbn = new OrbNode(width/2 + ((float)i - (float)n/2 + 0.5) * SPRING_LENGTH, height/2, 
+                          random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
+                          addFront(orbn);
+      }
     }
   }//populate
 
