@@ -1,4 +1,4 @@
-class FixedOrb extends Orb {
+class FixedOrb extends OrbNode {
 
   FixedOrb(float x, float y, float s, float m) {
     super(x, y, s, m);
