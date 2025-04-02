@@ -7,12 +7,14 @@ float G_CONSTANT = 1;
 float D_COEF = 0.1;
 
 int SPRING_LENGTH = 50;
-float  SPRING_K = 0.005;
+float  SPRING_K = 0.05;
 
 int MOVING = 0;
 int BOUNCE = 1;
 int GRAVITY = 2;
-int DRAGF = 3;
+int SPRINGS = 3;
+int DRAGF = 4;
+int BUOYANCY = 5;
 
 int GRAVITYSIM = 0;
 int SPRINGSIM = 1;
@@ -20,9 +22,9 @@ int DRAGSIM = 2;
 int BUOYSIM = 3;
 int COMBOSIM = 4;
 
-boolean[] toggles = new boolean[4];
+boolean[] toggles = new boolean[6];
 boolean[] simulation = new boolean[5];
-String[] modes = {"Moving", "Bounce", "Gravity", "Drag"};
+String[] modes = {"Moving", "Bounce", "Gravity", "Springs", "Drag", "Buoyancy"};
 String[] sims = {"Gravity", "Spring", "Drag", "Buoyancy", "Combo"};
 
 FixedOrb earth;
@@ -32,10 +34,11 @@ OrbList slinky;
 void setup() {
   size(600, 600);
 
-  earth = new FixedOrb(width/2, height * 200, 1, 20000);
+  //earth = new FixedOrb(width/2, height * 200, 1, 20000);
 
   slinky = new OrbList();
   simulation[GRAVITYSIM] = true;
+  toggles[GRAVITY] = true;
   slinky.populate(NUM_ORBS, GRAVITYSIM);
 }//setup
 
@@ -50,7 +53,7 @@ void draw() {
     slinky.applySprings(SPRING_LENGTH, SPRING_K);
 
     if (toggles[GRAVITY]) {
-      slinky.applyGravity(earth, GRAVITY);
+      slinky.applyGravity(slinky.front, GRAVITY);
     }
     slinky.run(toggles[BOUNCE]);
   }//moving
@@ -68,6 +71,7 @@ void keyPressed() {
   if (key == 'g') { toggles[GRAVITY] = !toggles[GRAVITY]; }
   if (key == 'b') { toggles[BOUNCE] = !toggles[BOUNCE]; }
   if (key == 'd') { toggles[DRAGF] = !toggles[DRAGF]; }
+  if (key == 's') { toggles[SPRINGS] = !toggles[SPRINGS]; }
   if (key == '=' || key =='+') {
     slinky.addFront(new OrbNode());
   }
@@ -76,24 +80,35 @@ void keyPressed() {
   }
   if (key == '1') {
     setSim(GRAVITYSIM);
+    toggles[GRAVITY] = true;
   }
   if (key == '2') {
     setSim(SPRINGSIM);
+    toggles[SPRINGS] = true;
+    toggles[BOUNCE] = true;
   }
   if (key == '3') {
     setSim(DRAGSIM);
+    toggles[DRAGF] = true;
   }
   if (key == '4') {
     setSim(BUOYSIM);
+    toggles[BUOYANCY] = true;
   }
   if (key == '5') {
     setSim(COMBOSIM);
+    toggles[GRAVITY] = true;
+    toggles[SPRINGS] = true;
+    toggles[BUOYANCY] = true;
   }
 }//keyPressed
 
 void setSim(int simType) {
   for (int i = 0; i < simulation.length; i++) {
     simulation[i] = false;
+  }
+  for (int i = 0; i < toggles.length; i++) {
+    toggles[i] = false;
   }
   simulation[simType] = true;
   slinky.populate(NUM_ORBS, simType);
