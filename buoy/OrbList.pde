@@ -38,6 +38,7 @@ class OrbList {
 
     if (simType == GRAVITYSIM) {
       FixedOrb sun = new FixedOrb(width/2, height/2, 10, 300);
+      addFront(sun);
       float acc;
       for (int i = 0; i < n; i++) {
         orb = new OrbNode(width/2/n*i, height/2,
@@ -46,7 +47,6 @@ class OrbList {
         orb.velocity = new PVector(0, - 20 * sqrt(acc * orb.center.dist(sun.center)));
         addFront(orb);
       }
-      addFront(sun);
     } else if (simType == SPRINGSIM) {
       for (int i = 0; i < n; i++) {
         orb = new OrbNode(width/2 + ((float)i - (float)n/2 + 0.5) * SPRING_LENGTH, height/2,

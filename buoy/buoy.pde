@@ -53,7 +53,11 @@ void draw() {
     slinky.applySprings(SPRING_LENGTH, SPRING_K);
 
     if (toggles[GRAVITY]) {
-      slinky.applyGravity(slinky.front, GRAVITY);
+      OrbNode sun = slinky.front;
+      while (sun.next != null) {
+        sun = sun.next;
+      }
+      slinky.applyGravity(sun, GRAVITY);
     }
     slinky.run(toggles[BOUNCE]);
   }//moving
