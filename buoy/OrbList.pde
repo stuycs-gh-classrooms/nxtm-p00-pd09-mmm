@@ -1,3 +1,4 @@
+
 class OrbList {
 
   OrbNode front;
@@ -20,12 +21,6 @@ class OrbList {
     o.next = front;
     front = o;
   }//addFront
-  
-  void addFront(Orb o) {
-    o.next = front;
-    front = o;
-  }//addFront
-
 
   /*===========================
    populate(int n, boolean ordered)
@@ -39,42 +34,43 @@ class OrbList {
    =========================*/
   void populate(int n, int simType) {
     front = null;
-    OrbNode orbn;
-    Orb orb;
-    for (int i = 0; i < n; i++) {
-      //switch(simType) {
-      //  case 1:
-      //  orb = new OrbNode(width/2/n*i, height/2, 
-      //                    random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
-      //  case 2:
-        
-      //  case 3:
-        
-      //  case 4:
-        
-      //  case 5:
-        
-      //  }
-      if (simType == GRAVITYSIM) {
-        orb = new Orb(width/2/n*i, height/2, 
-                          random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
-                          addFront(orb);
-      } else if (simType == SPRINGSIM) {
-        orbn = new OrbNode(width/2 + ((float)i - (float)n/2 + 0.5) * SPRING_LENGTH, height/2, 
-                          random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
-                          addFront(orbn);
-      } else if (simType == DRAGSIM) {
-        orb = new Orb(width/2 + ((float)i - (float)n/2 + 0.5) * SPRING_LENGTH, height/2, 
-                          random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
-                          addFront(orb);
-      } else if (simType == BUOYSIM) {
-        orb = new Orb(width/2 + ((float)i - (float)n/2 + 0.5) * SPRING_LENGTH, height/2, 
-                          random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
-                          addFront(orb);
-      } else {
-        orbn = new OrbNode(width/2 + ((float)i - (float)n/2 + 0.5) * SPRING_LENGTH, height/2, 
-                          random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
-                          addFront(orbn);
+    OrbNode orb;
+
+    if (simType == GRAVITYSIM) {
+      FixedOrb sun = new FixedOrb(width/2, height/2, 10, 300);
+      float acc;
+      for (int i = 0; i < n; i++) {
+        orb = new OrbNode(width/2/n*i, height/2,
+          random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
+        acc = sun.mass * G_CONSTANT/pow(orb.center.dist(sun.center), 2);
+        orb.velocity = new PVector(0, - 20 * sqrt(acc * orb.center.dist(sun.center)));
+        addFront(orb);
+      }
+      addFront(sun);
+    } else if (simType == SPRINGSIM) {
+      for (int i = 0; i < n; i++) {
+        orb = new OrbNode(width/2 + ((float)i - (float)n/2 + 0.5) * SPRING_LENGTH, height/2,
+          random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
+        orb.velocity = new PVector(0, 10);
+        addFront(orb);
+      }
+    } else if (simType == DRAGSIM) {
+      for (int i = 0; i < n; i++) {
+        orb = new OrbNode(width/2 + ((float)i - (float)n/2 + 0.5) * SPRING_LENGTH, height/2,
+          random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
+        addFront(orb);
+      }
+    } else if (simType == BUOYSIM) {
+      for (int i = 0; i < n; i++) {
+        orb = new OrbNode(width/2 + ((float)i - (float)n/2 + 0.5) * SPRING_LENGTH, height/2,
+          random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
+        addFront(orb);
+      }
+    } else {
+      for (int i = 0; i < n; i++) {
+        orb = new OrbNode(width/2 + ((float)i - (float)n/2 + 0.5) * SPRING_LENGTH, height/2,
+          random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
+        addFront(orb);
       }
     }
   }//populate
@@ -89,10 +85,12 @@ class OrbList {
   }//display
 
   void applySprings(int springLength, float springK) {
-    OrbNode curr = front;
-    while (curr != null) {
-      curr.applySprings(springLength, springK);
-      curr = curr.next;
+    if (toggles[SPRINGS]) {
+      OrbNode curr = front;
+      while (curr != null) {
+        curr.applySprings(springLength, springK);
+        curr = curr.next;
+      }
     }
   }//applySprings
 
