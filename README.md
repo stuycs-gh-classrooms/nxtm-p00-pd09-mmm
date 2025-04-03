@@ -82,6 +82,7 @@ Similar to previous simulations, OrbNodes will be connected to each other by a s
 Describe what your drag simulation will look like. Explain how it will be setup, and how it should behave while running.
 
 Two Orbs of fixed size with an initial rightward velocity will be placed on the left half of the screen, and two areas of different drag coefficient will be separated by a horizontal line in the center, each area denoted with a different color. 
+One of the areas would be full of water, and the other area would be wind and stuff.
 
 --- 
 
