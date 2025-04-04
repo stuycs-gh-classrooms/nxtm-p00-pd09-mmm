@@ -55,9 +55,20 @@ class OrbList {
         addFront(orb);
       }
     } else if (simType == DRAGSIM) {
+      //for (int i = 0; i < n; i++) {
+      //  orb = new OrbNode(width/2 + ((float)i - (float)n/2 + 0.5) * SPRING_LENGTH, height/2,
+      //    random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
+      //  addFront(orb);
+      //}
+
       for (int i = 0; i < n; i++) {
-        orb = new OrbNode(width/2 + ((float)i - (float)n/2 + 0.5) * SPRING_LENGTH, height/2,
-          random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
+        orb = new OrbNode(
+          random(width/4),
+          random(height/4, height/2 - 20),
+          random(MIN_SIZE, MAX_SIZE),
+          random(MIN_MASS, MAX_MASS)
+          );
+        orb.velocity = new PVector(random(5, 10), 0);
         addFront(orb);
       }
     } else if (simType == BUOYSIM) {
@@ -103,6 +114,18 @@ class OrbList {
       curr = curr.next;
     }
   }//applySprings
+
+  void applyDrag() {
+    OrbNode curr = front;
+    while (curr != null) {
+      //which drag coef to use based on position
+      float dragCoef = (curr.center.y > height/2) ? WATER_DRAG_COEF : AIR_DRAG_COEF;
+
+      PVector dragForce = curr.getDragForce(dragCoef);
+      curr.applyForce(dragForce);
+      curr = curr.next;
+    }
+  }
 
   void run(boolean bounce) {
     OrbNode curr = front;

@@ -5,6 +5,9 @@ float MIN_MASS = 10;
 float MAX_MASS = 100;
 float G_CONSTANT = 1;
 float D_COEF = 0.1;
+float AIR_DRAG_COEF = 0.01;
+float WATER_DRAG_COEF = 0.1;
+
 
 int SPRING_LENGTH = 50;
 float  SPRING_K = 0.05;
@@ -46,6 +49,12 @@ void draw() {
   background(255);
   displayMode();
 
+  if(simulation[DRAGSIM]) {
+    fill(64, 164, 223, 150);
+    noStroke();
+    rect(0, height/2, width, height/2);
+  }
+  
   slinky.display();
 
   if (toggles[MOVING]) {
@@ -59,6 +68,11 @@ void draw() {
       }
       slinky.applyGravity(sun, GRAVITY);
     }
+    
+    if(toggles[DRAGF]) {
+       slinky.applyDrag(); 
+    }
+    
     slinky.run(toggles[BOUNCE]);
   }//moving
 }//draw
