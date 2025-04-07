@@ -3,11 +3,6 @@ class OrbList {
 
   OrbNode front;
 
-  /*===========================
-   Contructor
-   Does very little.
-   You do not need to modify this method.
-   =========================*/
   OrbList() {
     //front = null;
   }//constructor
@@ -26,25 +21,25 @@ class OrbList {
    populate(int n, boolean ordered)
    
    Clear the list.
-   Add n randomly generated  orbs to the list,
+   Add n orbs to the list,
    using addFront.
-   If ordered is true, the orbs should all
-   have the same y coordinate and be spaced
-   SPRING_LEGNTH apart horizontally.
+   GRAVITYSIM: line them up along the left side of the center planet, make initial upward velocity to orbit.
+   SPRINGSIM:  line them up horizontally along the center of the screen, make initial downward vel.
+   DRAGSIM:    place them around the left center of the screen, above water level, initial rightward vel.
+   BUOYSIM:    place them randomly.
+   COMBOSIM:   line them up horizontally along the center of the screen.
    =========================*/
   void populate(int n, int simType) {
     front = null;
     OrbNode orb;
 
     if (simType == GRAVITYSIM) {
-      FixedOrb sun = new FixedOrb(width/2, height/2, 10, 300);
-      addFront(sun);
       float acc;
       for (int i = 0; i < n; i++) {
         orb = new OrbNode(width/2/n*i, height/2,
           random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
-        acc = sun.mass * G_CONSTANT/pow(orb.center.dist(sun.center), 2);
-        orb.velocity = new PVector(0, - 20 * sqrt(acc * orb.center.dist(sun.center)));
+        acc = planet.mass * G_CONSTANT/pow(orb.center.dist(planet.center), 2);
+        orb.velocity = new PVector(0, - 13 * sqrt(acc * orb.center.dist(planet.center)));
         addFront(orb);
       }
     } else if (simType == SPRINGSIM) {
@@ -73,8 +68,7 @@ class OrbList {
       }
     } else if (simType == BUOYSIM) {
       for (int i = 0; i < n; i++) {
-        orb = new OrbNode(width/2 + ((float)i - (float)n/2 + 0.5) * SPRING_LENGTH, height/2,
-          random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
+        orb = new OrbNode();
         addFront(orb);
       }
     } else {
@@ -96,12 +90,10 @@ class OrbList {
   }//display
 
   void applySprings(int springLength, float springK) {
-    if (toggles[SPRINGS]) {
-      OrbNode curr = front;
-      while (curr != null) {
-        curr.applySprings(springLength, springK);
-        curr = curr.next;
-      }
+    OrbNode curr = front;
+    while (curr != null) {
+      curr.applySprings(springLength, springK);
+      curr = curr.next;
     }
   }//applySprings
 
@@ -115,11 +107,21 @@ class OrbList {
     }
   }//applySprings
 
-  void applyDrag() {
+  void applyBuoyancy(Orb other, float gConstant, float waterP, float waterL) {
+    OrbNode curr = front;
+    PVector buoy;
+    while (curr != null) {
+      buoy = curr.getBuoyancy(other, gConstant, waterP, waterL);
+      curr.applyForce(buoy);
+      curr = curr.next;
+    }
+  }//applySprings
+
+  void applyDrag(float level) {
     OrbNode curr = front;
     while (curr != null) {
       //which drag coef to use based on position
-      float dragCoef = (curr.center.y > height/2) ? WATER_DRAG_COEF : AIR_DRAG_COEF;
+      float dragCoef = (curr.center.y > height - level) ? WATER_DRAG_COEF : AIR_DRAG_COEF;
 
       PVector dragForce = curr.getDragForce(dragCoef);
       curr.applyForce(dragForce);
