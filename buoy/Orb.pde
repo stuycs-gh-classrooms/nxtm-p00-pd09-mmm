@@ -97,7 +97,12 @@ class Orb {
     float theta = asin(2 * ((height - level) - center.y)/bsize);
     println("theta: " + theta);
     float slice = (PI / 2 + theta) * pow(bsize/2, 2); //the submerged *sector* of the circle with endpoints on water level
-    float triangle = sin(PI - theta) * pow(bsize/2, 2); //the remaining *triangle* that is also underwater
+    float triangle;
+    if (theta > 0) {
+      triangle = sin(PI - 2 * theta)/2 * pow(bsize/2, 2); //the remaining *triangle* that is also underwater
+    } else {
+      triangle = sin(- PI - 2 * theta)/2 * pow(bsize/2, 2); //the added *triangle* that is *not* underwater
+    }
     float displacement = slice + triangle;
     //println(displacement);
     return displacement;
