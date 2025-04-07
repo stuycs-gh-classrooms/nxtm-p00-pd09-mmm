@@ -90,7 +90,7 @@ One of the areas would be full of water, and the other area would be wind and st
 Describe what your Custom force simulation will look like. Explain how it will be setup, and how it should behave while running.
 
 ~5 Orbs will appear randomly inside the fluid, with no initial velocity. However, due to buoyancy, they will naturally float (or sink, as buoyancy also requires gravity to work).
-Additionally, the user can change the orientation of the container with the left and right arrow keys, and the volume of liquid in the container with the up and down arrow keys.
+Additionally, the user can change the orientation of the volume of liquid in the container with the up and down arrow keys.
 
 --- 
 
