@@ -78,6 +78,31 @@ class Orb {
 
     return direction;
   }//getSpring
+  
+  PVector getBuoyancy(Orb other, float G, float p, float level) {
+    PVector gravity = getGravity(other, G);
+    float displacement = getDisplacement(level);
+    gravity.mult(- displacement * p / mass);
+    println(gravity + " " + displacement);
+    return gravity;
+  }
+  
+  float getDisplacement(float level) {
+    if (center.y - (height - level) > bsize/2) {
+      return PI * pow(bsize/2, 2);
+    }//if completely submerged, use the entire area of the circle
+    if ((height - level) - center.y > bsize/2) {
+      return 0;
+    }//if not submerged at all, no displacement
+    float theta = asin(2 * ((height - level) - center.y)/bsize);
+    println("theta: " + theta);
+    float slice = (PI / 2 + theta) * pow(bsize/2, 2); //the submerged *sector* of the circle with endpoints on water level
+    float triangle = sin(PI - theta) * pow(bsize/2, 2); //the remaining *triangle* that is also underwater
+    float displacement = slice + triangle;
+    //println(displacement);
+    return displacement;
+  }
+
 
   boolean yBounce(){
     if (center.y > height - bsize/2) {
@@ -130,6 +155,7 @@ class Orb {
     circle(center.x, center.y, bsize);
     fill(0);
     //text(mass, center.x, center.y);
+    //text(mass/(pow(bsize/2, 2) * PI), center.x - 20, center.y - 25);
   }//display
 
 }//Orb
